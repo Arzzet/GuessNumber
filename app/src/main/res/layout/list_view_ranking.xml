@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rankingName"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:layout_weight="1"
+        android:text="NOM"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/rankingScore"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:layout_weight="0"
+        android:text="INTENTS"
+        android:textSize="30sp" />
+</LinearLayout>

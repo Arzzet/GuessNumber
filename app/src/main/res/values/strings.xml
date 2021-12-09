@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GuessNumber</string>
+    <string name="input_number">Enter a number</string>
+    <string name="button_validate">verify</string>
+    <string name="check_hint"></string>
+    <string name="result">Result</string>
+</resources>
