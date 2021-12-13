@@ -3,14 +3,17 @@ package com.example.guessnumber;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 /*
@@ -29,14 +32,22 @@ import java.util.ArrayList;
 
 
 public class Results extends AppCompatActivity {
+
+
     // Model: Record (intents=puntuació, nom)
     class Record {
         public int intents;
         public String nom;
+        public Uri foto;
 
         public Record(int _intents, String _nom ) {
             intents = _intents;
             nom = _nom;
+        }
+        public Record(int _intents, String _nom, Uri _uri ) {
+            intents = _intents;
+            nom = _nom;
+            foto = _uri;
         }
         public int getIntents(){
             return this.intents;
@@ -45,6 +56,10 @@ public class Results extends AppCompatActivity {
         public String getNom(){
             return this.nom;
         }
+
+        public Uri getFoto() { return this.foto;}
+
+        public void setFoto(Uri uri) {this.foto = uri;}
     }
     // Model = Taula de records: utilitzem ArrayList
     static ArrayList<Record> records = new ArrayList<Record>();
@@ -68,8 +83,11 @@ public class Results extends AppCompatActivity {
 //        records.add( new Record(42,"Laura") );
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
         String[] result = message.split(",");
-        records.add(new Record(Integer.parseInt(result[1]),result[0]));
+        Uri foto = Uri.fromFile(new File(result[3]));
+//        System.out.println(result[0] + result[1] + result[2]);
+        records.add(new Record(Integer.parseInt(result[1]),result[0], foto));
         System.out.println(records.get(0).getIntents());
 
         //Ordenacion por intentos
@@ -86,6 +104,10 @@ public class Results extends AppCompatActivity {
                     String aux2 = records.get(j + 1).getNom();
                     records.set(j + 1,records.get(j)).getNom();
                     records.set(j,records.get(aux)).getNom();
+
+                    Uri aux3 = records.get(j+1).getFoto();
+                    records.set(j+1, records.get(j)).getFoto();
+                    records.set(j,records.get(aux)).getFoto();
 
 //                    aux = min.get(j + 1);
 //                    min.set(j + 1,min.get(j));
@@ -117,6 +139,7 @@ public class Results extends AppCompatActivity {
                 // "Pintem" valors (també quan es refresca)
                 ((TextView) convertView.findViewById(R.id.rankingName)).setText(getItem(pos).nom);
                 ((TextView) convertView.findViewById(R.id.rankingScore)).setText(Integer.toString(getItem(pos).intents));
+                ((ImageView) convertView.findViewById(R.id.fotoView)).setImageURI(getItem(pos).foto);
                 return convertView;
             }
 
